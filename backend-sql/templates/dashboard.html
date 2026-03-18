@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - User Portal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .navbar {
+            background-color: rgba(255, 255, 255, 0.95);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 40px;
+        }
+        .navbar-content {
+            max-width: 1500px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .navbar h2 {
+            color: #667eea;
+            font-size: 24px;
+        }
+        .navbar-logout {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+        .navbar-logout-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 10px rgba(245, 87, 108, 0.3);
+        }
+        .navbar-logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.5);
+        }
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 40px;
+        }
+        .header h1 {
+            font-size: 42px;
+            margin-bottom: 10px;
+        }
+        .header p {
+            font-size: 18px;
+            opacity: 0.9;
+        }
+        .alert {
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            animation: slideIn 0.3s ease-in;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-20px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border-left: 4px solid #28a745;
+        }
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-left: 4px solid #f44336;
+        }
+        .user-card {
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .user-info {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .info-icon {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+        }
+        .info-content h3 {
+            color: #666;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+        .info-content p {
+            color: #333;
+            font-size: 18px;
+            font-weight: 600;
+            word-break: break-all;
+        }
+        .button-group {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 30px;
+        }
+        button, a.btn {
+            padding: 13px 25px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+        .btn-secondary {
+            background-color: #6c757d;
+            color: white;
+            box-shadow: 0 4px 15px rgba(108, 117, 125, 0.4);
+        }
+        .btn-secondary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(108, 117, 125, 0.6);
+        }
+        .btn-danger {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.4);
+        }
+        .btn-danger:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(245, 87, 108, 0.6);
+        }
+        @media (max-width: 600px) {
+            .user-info {
+                grid-template-columns: 1fr;
+            }
+            .header h1 {
+                font-size: 32px;
+            }
+            .user-card {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="navbar">
+        <div class="navbar-content">
+            <h2><i class="fas fa-user-circle"></i> User Portal</h2>
+            <div class="navbar-logout">
+                <form method="POST" action="{{ url_for('logout') }}" style="margin: 0;">
+                    {{ logout_form.csrf_token }}
+                    <button type="submit" class="navbar-logout-btn">
+                        <i class="fas fa-sign-out-alt"></i> Logout
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="header">
+            <h1>Welcome Back! 👋</h1>
+            <p>Manage your account and explore more features</p>
+        </div>
+
+        {% if success %}
+            <div class="alert alert-success">
+                <i class="fas fa-check-circle"></i> {{ success }}
+            </div>
+        {% endif %}
+        
+        {% if error %}
+            <div class="alert alert-error">
+                <i class="fas fa-exclamation-circle"></i> {{ error }}
+            </div>
+        {% endif %}
+
+        <div class="user-card">
+            <div class="user-info">
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Username</h3>
+                        <p>{{ username }}</p>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="info-content">
+                        <h3>Email Address</h3>
+                        <p>{{ email }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-group">
+                <a href="{{ url_for('update_email', user_id=user_id) }}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Update Email
+                </a>
+                <a href="{{ url_for('fetch_all') }}" class="btn btn-secondary">
+                    <i class="fas fa-users"></i> View All Users
+                </a>
+
+                <form method="post" action="{{ url_for('delete_account', user_id=user_id) }}" style="display:contents;" onsubmit="return confirm('Are you sure you want to delete your account? This action cannot be undone.');">
+                    <button type="submit" class="btn btn-danger">
+                        <i class="fas fa-trash-alt"></i> Delete Account
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
