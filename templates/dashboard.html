@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cute dashboard greeting screen">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="dashboard-body">
+    <div class="dashboard-shell">
+        <p class="dashboard-signature">Welcome&#10084;&#65039;</p>
+
+        <section class="dashboard-card">
+            <div class="dashboard-badge">Dashboard</div>
+            <h1>Hello {{ username }}</h1>
+            <p class="dashboard-copy">
+                You made it in successfully. This space is your happy little corner inside the app.
+            </p>
+
+            <div class="dashboard-panels">
+                <article class="mini-card">
+                    <span class="mini-card-label">Mood</span>
+                    <strong>Bright and cozy</strong>
+                    <p>Soft colors, calm spacing, and a sweet welcome just for you.</p>
+                </article>
+
+                <article class="mini-card">
+                    <span class="mini-card-label">Status</span>
+                    <strong>Signed in</strong>
+                    <p>Your session is active, so you can stay here and enjoy the dashboard.</p>
+                </article>
+            </div>
+
+            <form method="POST" action="{{ url_for('logout') }}">
+                <button type="submit" class="btn-submit dashboard-button">Log out</button>
+            </form>
+        </section>
+    </div>
+</body>
+</html>

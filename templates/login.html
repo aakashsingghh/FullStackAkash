@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Sign in to your account">
+    <title>Sign In</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="auth-container">
+
+        <!-- Illustration Panel -->
+        <div class="illustration-panel">
+            <img src="{{ url_for('static', filename='images/login_illustration.png') }}" alt="Sign in illustration">
+        </div>
+
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h1>Sign in</h1>
+                <p>Welcome back! Please enter your credentials.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" id="login-form">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-wrapper">
+                        {{ form.email(class="form-input" + (" error" if form.email.errors else ""), placeholder="Enter your email", id="email") }}
+                        <span class="input-icon">&#9993;</span>
+                    </div>
+                    {% if form.email.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.email.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        {{ form.password(class="form-input" + (" error" if form.password.errors else ""), placeholder="Enter your password", id="password") }}
+                        <span class="input-icon">&#128065;</span>
+                    </div>
+                    {% if form.password.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.password.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                {{ form.submit(class="btn-submit", id="login-submit") }}
+            </form>
+
+            <p class="form-footer">
+                Don't have an account? <a href="{{ url_for('register') }}">Register here</a>
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>

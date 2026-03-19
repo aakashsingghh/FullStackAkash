@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Create a new account">
+    <title>Register</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+
+    <div class="auth-container">
+
+        <!-- Illustration Panel -->
+        <div class="illustration-panel">
+            <img src="{{ url_for('static', filename='images/login_illustration.png') }}" alt="Register illustration">
+        </div>
+
+        <!-- Form Panel -->
+        <div class="form-panel">
+            <div class="form-header">
+                <h1>Create Account</h1>
+                <p>Join us! Fill in your details to get started.</p>
+            </div>
+
+            {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                    <div class="flash-messages">
+                        {% for category, message in messages %}
+                            <div class="flash-message {{ category }}">{{ message }}</div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+            {% endwith %}
+
+            <form method="POST" id="register-form">
+                {{ form.hidden_tag() }}
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <div class="input-wrapper">
+                        {{ form.username(class="form-input" + (" error" if form.username.errors else ""), placeholder="Choose a username", id="username") }}
+                        <span class="input-icon">&#128100;</span>
+                    </div>
+                    {% if form.username.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.username.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <div class="input-wrapper">
+                        {{ form.email(class="form-input" + (" error" if form.email.errors else ""), placeholder="Enter your email", id="email") }}
+                        <span class="input-icon">&#9993;</span>
+                    </div>
+                    {% if form.email.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.email.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        {{ form.password(class="form-input" + (" error" if form.password.errors else ""), placeholder="Create a password", id="password") }}
+                        <span class="input-icon">&#128274;</span>
+                    </div>
+                    {% if form.password.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.password.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Confirm Password</label>
+                    <div class="input-wrapper">
+                        {{ form.confirm_password(class="form-input" + (" error" if form.confirm_password.errors else ""), placeholder="Confirm your password", id="confirm_password") }}
+                        <span class="input-icon">&#128274;</span>
+                    </div>
+                    {% if form.confirm_password.errors %}
+                        <ul class="field-errors">
+                            {% for error in form.confirm_password.errors %}
+                                <li class="field-error">{{ error }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% endif %}
+                </div>
+
+                {{ form.submit(class="btn-submit", id="register-submit") }}
+            </form>
+
+            <p class="form-footer">
+                Already have an account? <a href="{{ url_for('login') }}">Sign in</a>
+            </p>
+        </div>
+
+    </div>
+
+</body>
+</html>
